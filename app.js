@@ -30,14 +30,14 @@ const WA_TOKEN = process.env.WA_TOKEN;
 
 app.post('/send-template', async (req, res) => {
   try {
-    const { phone, templateName = 'hello_world', langCode = 'en_US', components = [] } = req.body;
+    const { to, templateName = 'hello_world', langCode = 'en_US', components = [] } = req.body;
 
-    if (!phone) return res.status(400).json({ error: 'Missing "phone" phone number (E.164 format)' });
+    if (!to) return res.status(400).json({ error: 'Missing "to" phone number (E.164 format)' });
 
     const url = `https://graph.facebook.com/${WA_API_VERSION}/${WA_PHONE_NUMBER_ID}/messages`;
     const payload = {
       messaging_product: 'whatsapp',
-      phone, // Ej: "528127248089"
+      to, // Ej: "528127248089"
       type: 'template',
       template: {
         name: templateName,
